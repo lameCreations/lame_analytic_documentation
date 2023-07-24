@@ -1,0 +1,29 @@
+<nav search_view="search">
+
+    <collection label="View Knowledge Objects">
+      <view name="index_information" />
+      <view name="sourcetype_information" />
+	  <view name="summary_index_information" />
+      <view name="analytic_information" />
+      
+      
+    </collection>
+      
+ 
+
+  <collection label="Splunk">
+         <view name="search"  />
+         <view name="analytics_workspace" />
+         <view name="datasets" />
+         <view name="reports" />
+         <view name="alerts" />
+         <view name="dashboards" />
+  </collection>
+
+
+
+
+  
+
+
+</nav>

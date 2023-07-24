@@ -1,0 +1,22 @@
+<dashboard version="1.1" theme="light">
+  <label>Index Information</label>
+  <description>information about the indexes on this system</description>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup index_info
+| rename _key as the_key
+| table the_key, index, description, usegroup</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">/app/lame_analytic_documentation/document_indexes?form.index=$row.index$&amp;form.description=$row.description$&amp;form.usegroup=$row.usegroup$&amp;form.the_key=$click.the_key$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

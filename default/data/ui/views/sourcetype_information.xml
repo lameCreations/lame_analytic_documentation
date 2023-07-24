@@ -1,0 +1,22 @@
+<dashboard version="1.1" theme="light">
+  <label>Sourcetype Information</label>
+  <description>get the information that has been collected about sourcetypes</description>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup sourcetype_info | search description = "tbd"
+| rename _key as the_key
+| table the_key, index, sourcetype, description, usegroup</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">/app/lame_analytic_documentation/document_sourcetypes?form.index=$row.index$&amp;form.sourcetype=$row.sourcetype$&amp;form.description=$row.description$&amp;form.the_key=$row.the_key$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

@@ -1,0 +1,41 @@
+<form version="1.1" theme="light">
+  <label>Document Analytics</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="text" token="the_key">
+      <label>The Key</label>
+    </input>
+    <input type="text" token="queries">
+      <label>Query</label>
+    </input>
+    <input type="text" token="description">
+      <label>Description</label>
+      <default>tbd</default>
+      <initialValue>tbd</initialValue>
+    </input>
+    <input type="dropdown" token="usegroup">
+      <label>Use Group</label>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+        <h1>$form.queries$</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup analytics_info | search _key = $the_key$
+| eval description = "$description$"
+| outputlookup analytics_info append=true</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

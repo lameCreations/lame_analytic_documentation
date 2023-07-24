@@ -1,0 +1,22 @@
+<dashboard version="1.1" theme="light">
+  <label>Analytic Information</label>
+  <description>Information about analytics on this system</description>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup analytics_info
+| rename _key as the_key
+| table the_key, queries, description, myapp, urlField</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">/app/lame_analytic_documentation/document_analytics?form.queries=$row.queries$&amp;form.description=$row.description$&amp;form.usegroup=$row.usegroup$&amp;form.the_key=$row.the_key$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

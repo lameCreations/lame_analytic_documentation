@@ -1,0 +1,22 @@
+<dashboard version="1.1" theme="light">
+  <label>Summary Index Information</label>
+  <description>information about the summary indexed data sources</description>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup source_info
+| rename _key as the_key
+| table the_key, index, source, description, usegroup</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">/app/lame_analytic_documentation/document_summary_indexes?host.index=$row.index$&amp;host.source=$row.source$&amp;host.description=$row.description$&amp;host.usegroup=$row.usegroup$&amp;host.the_key=$row.the_key$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

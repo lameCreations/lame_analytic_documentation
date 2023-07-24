@@ -1,0 +1,83 @@
+[app/ui]
+version = 9.1.0.1
+modtime = 1689347494.242034000
+
+[app/launcher]
+version = 9.1.0.1
+modtime = 1689347494.243038000
+
+[savedsearches/update_index_info]
+access = read : [ * ], write : [ * ]
+export = none
+owner = admin
+version = 9.1.0.1
+modtime = 1689349913.860178000
+
+[savedsearches/update_sourcetype_info]
+access = read : [ * ], write : [ * ]
+export = none
+owner = admin
+version = 9.1.0.1
+modtime = 1689350091.489669000
+
+[savedsearches/update_source_info]
+access = read : [ * ], write : [ * ]
+export = none
+owner = admin
+version = 9.1.0.1
+modtime = 1689350235.600486000
+
+[views/document_sourcetypes]
+owner = admin
+version = 9.1.0.1
+modtime = 1689388087.450327000
+
+[views/sourcetype_information]
+owner = admin
+version = 9.1.0.1
+modtime = 1689370474.219173000
+
+[views/index_information]
+owner = admin
+version = 9.1.0.1
+modtime = 1689370416.465409000
+
+[views/summary_index_information]
+owner = admin
+version = 9.1.0.1
+modtime = 1689370534.487152000
+
+[views/analytic_information]
+owner = admin
+version = 9.1.0.1
+modtime = 1689370021.902017000
+
+[views/document_indexes]
+owner = admin
+version = 9.1.0.1
+modtime = 1689387952.266051000
+
+[views/document_summary_indexes]
+owner = admin
+version = 9.1.0.1
+modtime = 1689388144.617522000
+
+[views/document_analytics]
+owner = admin
+version = 9.1.0.1
+modtime = 1689387848.072032000
+
+[savedsearches/update_analytics_info]
+access = read : [ * ], write : [ * ]
+export = none
+owner = admin
+version = 9.1.0.1
+modtime = 1689387327.324091000
+
+[nav/default]
+version = 9.1.0.1
+modtime = 1689388373.334898000
+
+[app/install/install_source_checksum]
+version = 9.1.0.1
+modtime = 1690155915.018015000

@@ -1,0 +1,30 @@
+<form version="1.1" theme="light">
+  <label>Document Indexes</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="text" token="index">
+      <label>Index</label>
+    </input>
+    <input type="text" token="description">
+      <label>Description</label>
+      <default>tbd</default>
+      <initialValue>tbd</initialValue>
+    </input>
+    <input type="dropdown" token="usegroup">
+      <label>Use Group</label>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup index_info | search _key = $the_key$
+| eval description = "description"
+| outputlookup index_info append=true</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,38 @@
+<form version="1.1" theme="light">
+  <label>Document Sourcetypes</label>
+  <description>documentation for sourcetypes</description>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="text" token="the_key">
+      <label>Key</label>
+    </input>
+    <input type="text" token="index">
+      <label>Index</label>
+    </input>
+    <input type="text" token="sourcetype">
+      <label>Sourcetype</label>
+    </input>
+    <input type="dropdown" token="usegroup">
+      <label>Use Group</label>
+    </input>
+    <input type="text" token="description">
+      <label>Description</label>
+      <default>tbd</default>
+      <initialValue>tbd</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup sourcetype_info | search _key = $the_key$
+| eval description = "description"
+| outputlookup sourcetype_info append=true</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
