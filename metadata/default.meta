@@ -52,3 +52,6 @@ modtime = 1688966043.085298000
 [viewstates]
 access = read : [ * ], write : [ * ]
 export = system
+
+[searchbnf]
+export = system
