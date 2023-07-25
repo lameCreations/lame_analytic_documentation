@@ -138,8 +138,8 @@ def addSourceType():
         ListOfAnalytic.append(newAnalytic)
         i += 1
 
-    writeSourcetype = '<h1 id="sourcetypes">2. Sourcetypes - count:' + str(stCount) + '</h1>'
-    append_text_to_file(file_path, writeSourcetype)
+    #writeSourcetype = '<h1 id="sourcetypes">2. Sourcetypes - count:' + str(stCount) + '</h1>'
+    #append_text_to_file(file_path, writeSourcetype)
 
     tempCounter = 0
     for nSourceType in ListOfSourceType:
