@@ -194,6 +194,9 @@ tbd,,,,,,"splunk_monitoring_console",,"
             | fields cron_schedule, next_scheduled_time, search 
             | rename cron_schedule as ""Cron Schedule"", next_scheduled_time as ""Next Scheduled Time"", search as ""Search""
           ",,,"admission_control_monitoring_instance"
+tbd,,,,"inputlookup analytics_info",,"lame_analytic_documentation",,"| inputlookup analytics_info
+| rename _key as the_key
+| table the_key, queries, description, myapp, urlField",,,"analytic_information"
 tbd,,,,,"lookup dashboard_details","lame_training",,"| rest splunk_server=local /servicesNS/-/-/data/ui/views
 | search eai:acl.app=* AND author!=""nobody""
 | table eai:data, app.owner, id, eai:acl.app author, eai:acl.sharing | lookup dashboard_details id as id output details, mitre, usecase
@@ -523,6 +526,17 @@ tbd,,,,,,"lame_training",,"| makeresults
 | eval proto=""$proto$""
 | cid proto b, a, b_port, a_port
 | table a, b, a_port, b_port proto cid",,,"community_id_generator"
+tbd,,,,,,"lame_inventory_creator",,"| rest servicesNS/-/-/saved/eventtypes
+| search id = ""*nt_index""
+| table title, search
+| rename title as ""Eventtype Title""
+| rename search as Value",,,"create_inventory_tutorial"
+tbd,,,,,,"lame_inventory_creator",,"| rest servicesNS/-/-/saved/eventtypes
+| search id = ""*nt_sourcetypes""
+| table title, search
+| rename title as ""Eventtype Title""
+| rename search as Value",,,"create_inventory_tutorial"
+tbd,,,,,,"lame_inventory_creator",,"| tstats values(sourcetype) as sourcetype from datamodel=Network_Traffic groupby All_Traffic.src_ip, All_Traffic.dest_ip | head 5",,,"create_inventory_tutorial"
 tbd,,,,,,"splunk_monitoring_console",,"
           | `dmc_get_groups_containing_role(dmc_group_indexer)`
           | search search_group!=""dmc_group_*""
@@ -603,6 +617,9 @@ tbd,,,,,,"splunk_monitoring_console",,"
             | stats sum(count) as ""Event Count"" by time_disparity
             | rename time_disparity as ""Observed Latency (hours)""
           ",,,"data_quality"
+tbd,,,,,,"Splunk_SA_CIM",,"sort 18 - size | table datamodel,size(MB)",,,"datamodel_audit"
+tbd,,,,,,"Splunk_SA_CIM",,"sort 18 - runDuration | table datamodel,runDuration",,,"datamodel_audit"
+tbd,,,,,,"Splunk_SA_CIM",,"sort 100 + datamodel | fieldformat earliest=strftime(earliest, ""%m/%d/%Y %H:%M:%S"") | fieldformat latest=strftime(latest, ""%m/%d/%Y %H:%M:%S"") | table datamodel,app,cron,retention(days),earliest,latest,is_inprogress,complete(%),size(MB),runDuration(s),last_error",,,"datamodel_audit"
 tbd,,,,,,"splunk_monitoring_console",,"| `dmc_get_groups_containing_role($role | h$)` | search search_group!=""dmc_group_*""",,,"distributed_search_deployment"
 tbd,,,,,,"splunk_monitoring_console",,"
           | rest splunk_server_group=$role | h$ splunk_server_group=""$group$"" /services/search/distributed/peers
@@ -858,6 +875,12 @@ tbd,,,,,,"splunk_monitoring_console",,"
             | eval bundle_dir_reaper_max_ms = round(bundle_dir_reaper_max_ms)
             | rename bundle_dir_reaper_mean_ms as Average, bundle_dir_reaper_max_ms as Max
           ",,"sourcetype=splunkd","distributed_search_instance"
+tbd,,,,"inputlookup analytics_info",,"lame_analytic_documentation","outputlookup analytics_info","| inputlookup analytics_info | search _key = $the_key$
+| eval description = ""$description$""
+| outputlookup analytics_info append=true",,,"document_analytics"
+tbd,,,,"inputlookup index_info",,"lame_analytic_documentation","outputlookup index_info","| inputlookup index_info | search _key = $the_key$
+| eval description = ""description""
+| outputlookup index_info append=true",,,"document_indexes"
 tbd,,,"index=*",,,"lame_training",,"| eventcount summarize=false index=* | dedup index | fields index",,,"document_sourcetype_analytics"
 tbd,,,,,,"lame_training",,"| metadata index=$idx$ type=sourcetypes | fields sourcetype",,,"document_sourcetype_analytics"
 tbd,,,,,,"lame_training","outputlookup Sourcetype_Analytics","| makeresults
@@ -881,6 +904,12 @@ tbd,,,,,,"lame_training","outputlookup SourcetypeInfo","| makeresults
 | where rationale != ""Change Me""
 
 | outputlookup SourcetypeInfo append=true",,,"document_sourcetype_fields"
+tbd,,,,"inputlookup sourcetype_info",,"lame_analytic_documentation","outputlookup sourcetype_info","| inputlookup sourcetype_info | search _key = $the_key$
+| eval description = ""description""
+| outputlookup sourcetype_info append=true",,,"document_sourcetypes"
+tbd,,,,"inputlookup source_info",,"lame_analytic_documentation","outputlookup source_info","| inputlookup source_info | search _key = $the_key$
+| eval description = ""description""
+| outputlookup source_info append=true",,,"document_summary_indexes"
 tbd,,,"index=_internal",,,"SA-Eventgen",,"index=""_internal"" source=""*/var/log/splunk/modinput_eventgen.log"" | table level | dedup level","source=*",,"eventgen_status"
 tbd,,,"index=_internal",,,"SA-Eventgen",,"index=""_internal"" source=""*/var/log/splunk/eventgen_metrics.log"" metric_type=""volume_sent""
             | fields volume_bytes
@@ -1797,6 +1826,9 @@ tbd,,,"index=_introspection",,,"splunk_monitoring_console",,"
 
             | `dmc_timechart_for_disk_usage` $funcBucket$(*_$single_index_metric$) as ""* bucket""
           ",,"sourcetype=splunk_disk_objects","index_detail_instance"
+tbd,,,,"inputlookup index_info",,"lame_analytic_documentation",,"| inputlookup index_info
+| rename _key as the_key
+| table the_key, index, description, usegroup",,,"index_information"
 tbd,,,,,,"splunk_monitoring_console",,"| `dmc_get_indexer_cluster_groups`",,,"indexer_clustering_service_activity"
 tbd,,,,,,"splunk_monitoring_console",,"
 `dmc_get_warnings_and_errors(dmc_group_indexer, Cluster*)` search_group=""$group$""
@@ -2709,6 +2741,21 @@ tbd,,,,,,"splunk_monitoring_console",,"
 tbd,,,,,,"splunk_monitoring_console",,"
             | rest splunk_server=$splunk_server$ /services/licenser/slaves | mvexpand active_pool_ids | where warning_count>0 | eval pool=active_pool_ids | join type=outer pool [rest splunk_server=$splunk_server$ /services/licenser/pools | eval pool=title | fields pool stack_id] | eval in_violation=if(warning_count>4 OR (warning_count>2 AND stack_id==""free""),""yes"",""no"") | fields label, title, pool, warning_count, in_violation | fields - _timediff | rename label as ""Slave"" title as ""GUID"" pool as ""Pool"" warning_count as ""Hard Warnings"" in_violation AS ""In Violation?""
           ",,,"license_usage_today"
+tbd,,,"index=_internal",,,"lookup_editor",,"index=_internal (sourcetype=lookup_editor_rest_handler OR sourcetype=lookup_backups_rest_handler) $severity$ | rex field=_raw ""(?&lt;severity&gt;(DEBUG)|(ERROR)|(WARNING)|(INFO)|(CRITICAL)) (?&lt;message&gt;.*)"" | fillnull severity value=""UNDEFINED"" | timechart count(severity) as count by severity",,"sourcetype=lookup_editor_rest_handler
+sourcetype=lookup_backups_rest_handler","lookup_editor_logs"
+tbd,,,"index=_internal",,,"lookup_editor",,"index=_internal (sourcetype=lookup_editor_rest_handler OR sourcetype=lookup_backups_rest_handler) | rex field=_raw ""(?&lt;severity&gt;(DEBUG)|(ERROR)|(WARNING)|(INFO)|(CRITICAL)) (?&lt;message&gt;.*)"" | fillnull value=""undefined"" vendor_severity | stats sparkline count by severity | sort -count",,"sourcetype=lookup_editor_rest_handler
+sourcetype=lookup_backups_rest_handler","lookup_editor_logs"
+tbd,,,"index=_internal",,,"lookup_editor",,"index=_internal (sourcetype=lookup_editor_rest_handler OR sourcetype=lookup_backups_rest_handler) $severity$
+          | rex field=_raw ""(?&lt;severity&gt;(DEBUG)|(ERROR)|(WARNING)|(INFO)|(CRITICAL)) (?&lt;message&gt;.*)""
+          | sort -_time
+          | eval time=_time
+          | convert ctime(time)
+          | table time severity message",,"sourcetype=lookup_editor_rest_handler
+sourcetype=lookup_backups_rest_handler","lookup_editor_logs"
+tbd,,,,,,"lookup_editor",,"| stats count as value | eval value=""Offline"" | append [rest /services/data/lookup_edit/ping | fields value] | stats last(value) as status | eval range=if(status==""Offline"", ""severe"", ""low"")",,,"lookup_editor_status"
+tbd,,,,,,"lookup_editor",,"| stats count as value | eval value=""Offline"" | append [rest /services/data/lookup_backup/ping | fields value] | stats last(value) as status | eval range=if(status==""Offline"", ""severe"", ""low"")",,,"lookup_editor_status"
+tbd,,,"index=_internal",,,"lookup_editor",,"index=_internal sourcetype=lookup_editor_rest_handler | timechart count",,"sourcetype=lookup_editor_rest_handler","lookup_editor_status"
+tbd,,,"index=_internal",,,"lookup_editor",,"index=_internal sourcetype=lookup_backups_rest_handler | timechart count",,"sourcetype=lookup_backups_rest_handler","lookup_editor_status"
 tbd,,,"index=_internal",,,"splunk_secure_gateway",,"index=_internal sourcetype=""secure_gateway_app_internal_log"" ""Dashboard Source Subscription Created"" | eval temp=split(dashboard_id, ""/"") 
 | eval dashboard_user=mvindex(temp,0)| eval dashboard_app=mvindex(temp,1) 
 | eval dashboard_name=mvindex(temp,2) | fields _time, search_key, request_id, device_id, current_user, dashboard_id, shard_id, is_alert, subscription_id, search_type_id, dashboard_user, dashboard_app, dashboard_name",,"sourcetype=secure_gateway_app_internal_log","recent_ssg_dashboard_activity"
@@ -3194,6 +3241,92 @@ tbd,,,,,,"splunk_monitoring_console",,"
 tbd,,,,,,"splunk_monitoring_console",,"
             `dmc_timechart_for_iostats` avg($io_perf_metric$) by mount_point
           ",,,"resource_usage_machine"
+tbd,,,,,,"threat_object_fun",,"| tstats summariesonly=t count values(All_Risk.risk_message) as risk_message values(All_Risk.risk_score) as risk_score values(All_Risk.savedsearch_description) as description values(All_Risk.annotations._all) as annotation values(source) as source values(All_Risk.src) as src values(All_Risk.user) as user values(All_Risk.threat_object) as threat_object from datamodel=Risk.All_Risk where All_Risk.risk_object=$field_rv$ groupby _time,All_Risk.risk_score,All_Risk.risk_message span=1s | table * | dedup _time risk_message ",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"
+    | search NOT risk_score=0
+    ",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"| tstats summariesonly=t count as event_count from datamodel=Risk.All_Risk where All_Risk.risk_object=$field_rv$ groupby All_Risk.risk_object   ",,,"risk_investigation_dashboard"
+tbd,,,"index=risk",,,"threat_object_fun",,"index=risk (NOT source=""/opt/*"" risk_object=""$field_rv$"")
+| stats count values(source) as source dc(risk_message) as risk_messages by threat_object
+| eventstats dc(threat_object) as dc_threats
+",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"
+| eval risk_score = round(risk_score,0) , risk_message = risk_score."" - "".risk_message
+| streamstats sum(risk_score) as score_original values(source) as sources values(risk_message) as risk_messages by risk_object
+| dedup risk_message risk_score
+| stats sum(risk_score) as risk_score",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"
+| makeresults | eval count = ""$event_count$"" | eval count = if(isnum(count),count,""0"")",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"
+| makeresults | eval count = ""$notable_count$"" | eval count = if(isnum(count),count,""0"")",,,"risk_investigation_dashboard"
+tbd,,,,"inputlookup identity_lookup_expanded",,"threat_object_fun",,"| inputlookup identity_lookup_expanded | search identity=""$field_rv$"" | table first last identity bunit startDate endDate watchlist_name | eval startDate=strftime(startDate,""%Y-%m-%d"") , endDate=strftime(endDate,""%Y-%m-%d"")",,,"risk_investigation_dashboard"
+tbd,,,,"inputlookup asset_lookup_by_str",,"threat_object_fun",,"| inputlookup asset_lookup_by_str | search nt_host=""$field_rv$"" | table wks_ip wks_usr wks_dom category city",,,"risk_investigation_dashboard"
+tbd,,,,,"lookup update
+lookup update
+lookup update
+lookup update
+lookup update","threat_object_fun",,"
+`get_notable_index` risk_object=$field_rv$
+| eval indexer_guid=replace('_bkt',"".*~(.+)"",""\\1""), event_hash=md5(('_time' . '_raw')), event_id=((((indexer_guid . ""@@"") . index) . ""@@"") . event_hash), rule_id=event_id 
+| eval latest=orig_time+1800 , earliest=orig_time-1800
+| search event_id=""*"" 
+| fields - ""host_*"" 
+| tags outputfield=tag 
+| eval tag=mvdedup(mvappend(tag,NULL,orig_tag)) 
+| dedup rule_id 
+| lookup update=true notable_xref_lookup event_id OUTPUTNEW xref_name as notable_xref_name,xref_id as notable_xref_id 
+| eval notable_xref=mvzip(notable_xref_name,notable_xref_id,"":"") 
+| eval temp_time=(time() + 86400) 
+| lookup update=true event_time_field=temp_time incident_review_lookup rule_id OUTPUT owner as new_owner, urgency as new_urgency, status as new_status, disposition as new_disposition 
+| lookup update=true event_time_field=temp_time incident_review_comment_lookup rule_id OUTPUT time as review_time,user as reviewer,comment 
+| eval owner=if(isnotnull(new_owner),new_owner,owner), status=case(isnotnull(new_status),new_status,isnotnull(status),status,true(),default_status), urgency=if(isnotnull(new_urgency),new_urgency,urgency), disposition=if(isnotnull(new_disposition),new_disposition,default_disposition) 
+| fields - temp_time, new_owner, new_status, new_urgency, new_disposition 
+| eval temp_status=if(isnull(status),-1,status) 
+| lookup update=true reviewstatuses_lookup _key as temp_status OUTPUT status,label as status_label,description as status_description,default as status_default,end as status_end 
+| eval status=if(isnull(status_label),0,status), status_label=if(isnull(status_label),""Unassigned"",status_label), status_description=if(isnull(status_description),""unknown"",status_description), status_default=case(match(status_default,""1|[Tt]|[Tt][Rr][Uu][Ee]""),""true"",match(status_default,""0|[Ff]|[Ff][Aa][Ll][Ss][Ee]""),""false"",true(),status_default), status_end=case(match(status_end,""1|[Tt]|[Tt][Rr][Uu][Ee]""),""true"",match(status_end,""0|[Ff]|[Ff][Aa][Ll][Ss][Ee]""),""false"",true(),status_end), status_group=case((status_default == ""true""),""New"",(status_end == ""true""),""Closed"",(status == 0),""New"",true(),""Open"") 
+| fields - temp_status 
+| eval temp_disposition=if(isnull(disposition),-3,disposition) 
+| lookup update=true disposition_lookup _key as temp_disposition OUTPUT status as disposition,label as disposition_label,description as disposition_description,default as disposition_default 
+| eval disposition=if(isnull(disposition),""disposition:0"",disposition), disposition_label=if(isnull(disposition_label),""Unassigned"",disposition_label), disposition_description=if(isnull(disposition_description),""An error is preventing the event from having a valid disposition."",disposition_description), disposition_default=case(match(disposition_default,""1|[Tt]|[Tt][Rr][Uu][Ee]""),""true"",match(disposition_default,""0|[Ff]|[Ff][Aa][Ll][Ss][Ee]""),""false"",true(),disposition_default) 
+| fields - temp_disposition 
+| table _time, orig_time, search_name, orig_source, status_label, status_end, comment, owner, reviewer, risk_object, risk_object_type, risk_messages, src, user, dest, rule_id, event_hash, earliest, latest
+| eventstats count as notable_count count(eval(status_label=""Incident"")) as incident_count | eval incident_count = if(isnull(incident_count),""0"",incident_count) | rename status_label as status
+| eval ir_link = ""https://i-0f475f545da6fbdc2.splunk.show/en-US/app/SplunkEnterpriseSecuritySuite/incident_review?earliest="".earliest.""&amp;latest="".latest.""&amp;status=*&amp;urgency=*&amp;search=event_hash%3D"".event_hash
+",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"| stats count as Events sum(risk_score) as risk_sum dc(risk_message) as ""Distinct Events"" values(description) as Description values(annotation) as Annotation by source | rename source as Rule | eval risk_sum = round(risk_sum,0) | rename risk_sum as ""Risk Sum"" | sort - ""Risk Sum"" ",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"
+  | rest splunk_server=local count=0 /services/saved/searches 
+  | search title=""$risk_rule_drilldown$"" | rename dispatch.earliest_time as early_time
+  | table title qualifiedSearch early_time
+",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",," | stats count as count by _time,risk_score,risk_message  | timechart span=30min limit=0 values(risk_score) as risk_score by risk_message
+        ",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"| makeresults 
+    | eval count=""0"" | eval count= if(isint($addriskmsg_count$),""$addriskmsg_count$"",0)
+    | fields count | table count | sort - count ",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"| makeresults 
+    | eval count=""0"" | eval count= if(isint($dc_threats$),""$dc_threats$"",0)
+    | fields count | table count | sort - count ",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"
+            | eval risk_score = round(risk_score)
+| eval risk_message = risk_score."" - "".risk_message
+| table _time source risk_message risk_score threat_object threat_short
+| sort + _time
+| eventstats count(risk_message) as riskmsg_count
+| search $search_filter$ | eventstats count(risk_message) as addriskmsg_count
+          ",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"
+             | where _time &gt; $selection.earliest$ AND _time &lt; $selection.latest$
+          ",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"
+",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval num_objects = if(isint($num_objects$),""$num_objects$"",0) | table num_objects
+          ",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval source_count = if(isint($source_count$),""$source_count$"",0) | table source_count",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"| makeresults 
+| eval risk_objects = if(isint($ro_count$),""$ro_count$"",0)
+| table risk_objects",,,"risk_investigation_dashboard"
+tbd,,,,,,"threat_object_fun",,"| tstats summariesonly=t count values(All_Risk.risk_message) as risk_message values(All_Risk.risk_score) as risk_score values(source) as sources values(All_Risk.risk_object_type) as risk_object_type from datamodel=Risk.All_Risk where All_Risk.threat_object=""$threat_token$"" groupby All_Risk.risk_object _time span=30d | rename All_Risk.risk_object as risk_object | table * | eval risk_score = mvindex(risk_score,0) , risk_score=round(risk_score,0) , risk_message = mvindex(risk_message,0) , risk_message = risk_score."" - "".risk_message | eventstats dc(risk_object) as ro_count dc(sources) as source_count sum(count) as num_objects | rename risk_message AS sample_message ",,,"risk_investigation_dashboard"
 tbd,,,,,,"splunk_secure_gateway",,"| rest services/ssg/registration/test_jwt dashboard_format=true ",,,"saml_troubleshooting_dashboard"
 tbd,,,,,,"splunk_secure_gateway",,"| makeresults | eval x = ""Test JWT Integration"" | fields x",,,"saml_troubleshooting_dashboard"
 tbd,,,,,,"splunk_secure_gateway",,"|rest services/ssg/registration/tokens_enabled dashboard_format=true
@@ -4637,6 +4770,9 @@ tbd,,,,"inputlookup SourcetypeInfo",,"lame_training",,"| inputlookup SourcetypeI
 tbd,,,,"inputlookup Sourcetype_Analytics",,"lame_training",,"| inputlookup Sourcetype_Analytics 
 | search sourcetype=$src_type$
 | table sourcetype, metric_description, metric_query",,,"sourcetype_documentation"
+tbd,,,,"inputlookup sourcetype_info",,"lame_analytic_documentation",,"| inputlookup sourcetype_info | search description = ""tbd""
+| rename _key as the_key
+| table the_key, index, sourcetype, description, usegroup",,,"sourcetype_information"
 tbd,,,"index=_internal",,,"splunk_archiver",,"index=_internal source=*splunk_archiver.log* finished | eval last_bucket_time=strftime(latest_bucket_time_secs, ""%F %T %z"")| eval transfered_mb=remote_bucket_bytes/1000000 | rename splunk_index AS ""Splunk Index"", virtual_index AS ""Archive Index"" | stats max(last_bucket_time) as ""Latest Archive Bucket Time"" sum(transfered_mb) as ""Total Transfered MB"" sum(buckets_copied) as ""Total Buckets Copied"" by ""Splunk Index"", ""Archive Index""","source=*splunk_archiver.log*",,"splunk_archiver_dashboard"
 tbd,,,"index=_internal",,,"splunk_archiver",,"index=_internal source=*splunk_archiver.log* earliest=-1d | rex max_match=1000 ""\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+ -\d{4} (?&lt;severity&gt;\w+) "" | where severity=""ERROR""","source=*splunk_archiver.log*",,"splunk_archiver_dashboard"
 tbd,,,"index=_internal",,,"splunk_archiver",,"index=_internal source=*splunk_archiver.log* committed | stats count by splunk_index","source=*splunk_archiver.log*",,"splunk_archiver_dashboard"
@@ -4938,7 +5074,251 @@ tbd,,,,,,"splunk_secure_gateway",,"| stats count as count
                  | table ok, range
           ",,,"subscription_tracing_dashboard"
 tbd,,,,,,"splunk_secure_gateway",,"| table _time, update_id, type, latency",,,"subscription_tracing_dashboard"
+tbd,,,,"inputlookup source_info",,"lame_analytic_documentation",,"| inputlookup source_info
+| rename _key as the_key
+| table the_key, index, source, description, usegroup",,,"summary_index_information"
 tbd,,,,,,"splunk_secure_gateway",,"| makeresults | eval testValue=random() | table testValue",,,"test_dashboard_single_value"
+tbd,,,,,,"threat_object_fun",,"
+      | tstats summariesonly=true count dc(All_Risk.risk_object) as dc_r_obj dc(All_Risk.threat_object) as dc_t_obj dc(All_Risk.src) as dc_src dc(All_Risk.dest) as dc_dest dc(All_Risk.user) as dc_users dc(All_Risk.user_bunit) as dc_bunit sum(All_Risk.calculated_risk_score) as risk_sum values(All_Risk.calculated_risk_score) as scores values(All_Risk.risk_object) as risk_object values(All_Risk.src) as src values(All_Risk.dest) as dest values(All_Risk.user) as user values(All_Risk.user_bunit) as bunit from datamodel=Risk.All_Risk where All_Risk.threat_object IN (""$threat_token$"") by All_Risk.threat_object,All_Risk.threat_object_type,source | `drop_dm_object_name(""All_Risk"")` 
+    ",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval num_objects = if(isint($num_objects$),""$num_objects$"",0) | table num_objects
+          ",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval source_count = if(isint($source_count$),""$source_count$"",0) | table source_count",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"| makeresults 
+| eval risk_objects = if(isint($ro_count$),""$ro_count$"",0)
+| table risk_objects",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval related_count = if(isint($related_count$),""$related_count$"",0) | table related_count",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"
+          | tstats summariesonly=t count values(All_Risk.risk_message) as risk_message sum(All_Risk.calculated_risk_score) as risk_score values(source) as sources dc(All_Risk.threat_object) as dc_t_obj values(All_Risk.threat_object_type) as t_types values(All_Risk.threat_object) as threat_object values(All_Risk.risk_object_type) as risk_object_type from datamodel=Risk.All_Risk where All_Risk.threat_object IN (""$threat_token$"") groupby All_Risk.risk_object All_Risk.calculated_risk_score source _time span=30d | `drop_dm_object_name(""All_Risk"")` | table * | dedup risk_message | eval risk_message=""-----=== "".source."" ===-----||"".""===== THREAT OBJECTS ====||"".mvjoin(threat_object,""||"").""||===== RISK MESSAGES =====||"".mvjoin(risk_message,""||"").""|| ||"" | rex mode=sed field=risk_message ""s/\|\|/\n/g"" | stats sum(count) as events sum(dc_t_obj) as dc_t_obj values(t_types) as t_types sum(risk_score) as risk_score values(sources) as sources values(risk_message) as risk_message by risk_object | eventstats dc(risk_object) as ro_count dc(sources) as source_count sum(events) as num_objects
+          ",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"
+            | tstats summariesonly=true count sum(All_Risk.calculated_risk_score) as risk_sum values(All_Risk.calculated_risk_score) as scores values(All_Risk.threat_object_type) as threat_object_type from datamodel=Risk.All_Risk where All_Risk.$search_values$ IN (""$values_search$"") by All_Risk.$search_values$,All_Risk.risk_object,source,All_Risk.threat_object | `drop_dm_object_name(""All_Risk"")` | eval threat_object_type=mvjoin(threat_object_type,""+"") , threat_object_full=threat_object , threat_object=if(len(threat_object)&lt;90, threat_object, substr(threat_object,1,90).""..."") , threat_object=threat_object_type."":  "".threat_object | stats values(threat_object) as threat_object values(threat_object_full) as threat_object_full sum(count) as count sum(risk_sum) as risk_sum by $search_values$,risk_object,source | eval threat_object=""--= "".source."" =--||"".mvjoin(threat_object,""||"") | rex mode=sed field=threat_object ""s/\|\|/\n/g"" | stats values(threat_object) as threat_object sum(count) as count sum(risk_sum) as risk_sum values(threat_object_full) as threat_object_full by $search_values$,risk_object  | eval threat_object_full=mvjoin(threat_object_full,""&amp;&amp;"")
+          ",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"
+            | tstats summariesonly=true count sum(All_Risk.calculated_risk_score) as risk_sum values(All_Risk.calculated_risk_score) as scores values(All_Risk.threat_object_type) as threat_object_type from datamodel=Risk.All_Risk where All_Risk.risk_object IN (""$values_search$"") by All_Risk.risk_object,source,All_Risk.threat_object | `drop_dm_object_name(""All_Risk"")` | eval threat_object_type=mvjoin(threat_object_type,""+"") , threat_object_full=threat_object , threat_object=if(len(threat_object)&lt;90, threat_object, substr(threat_object,1,90).""..."") , threat_object=threat_object_type."":  "".threat_object | stats values(threat_object) as threat_object values(threat_object_full) as threat_object_full sum(count) as count sum(risk_sum) as risk_sum by risk_object,source | eval threat_object=""--= "".source."" =--||"".mvjoin(threat_object,""||"") | rex mode=sed field=threat_object ""s/\|\|/\n/g"" | stats values(threat_object) as threat_object sum(count) as count sum(risk_sum) as risk_sum values(threat_object_full) as threat_object_full by risk_object  | eval threat_object_full=mvjoin(threat_object_full,""&amp;&amp;"")
+          ",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"| search threat_object IN (""$threat_token$"") | sort 1000 + count | eval threat_object_full=threat_object | eval type=threat_object_type | eval threat_object=if(len(threat_object)&lt;50, threat_object, substr(threat_object,1,50).""..."")",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"| search NOT threat_object IN (""$threat_token$"") | sort 1000 + count | eval threat_object_full=threat_object | eval type=threat_object_type | eval threat_object=if(len(threat_object)&lt;50, threat_object, substr(threat_object,1,50).""..."") | eventstats dc(threat_object_full) as dc_related_objects",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"
+  | rest splunk_server=local count=0 /services/saved/searches 
+  | search title=""$risk_drilldown$"" | rename dispatch.earliest_time as early_time qualifiedSearch as search_spl
+  | table description search_spl early_time
+  | eval search_spl = if(match(search_spl,""^(|\s)(tstats|from).*""),""|"".search_spl,search_spl)
+          ",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"| tstats summariesonly=false sum(All_Risk.calculated_risk_score) as risk_score,dc(All_Risk.risk_object) as risk_objects,count from datamodel=Risk.All_Risk where All_Risk.threat_object IN(""$threat_token$"") All_Risk.risk_object_type=""*"" (All_Risk.risk_object=""*"" OR risk_object=""*"") by source | sort 1000 - count,risk_score",,,"threat_object__hunting"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval title = ""tune"" | table title
+          ",,,"threat_object_content_dev"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval title = ""develop"" | table title
+          ",,,"threat_object_content_dev"
+tbd,,,,,,"threat_object_fun",,"| tstats summariesonly=false sum(All_Risk.calculated_risk_score) as risk_score dc(All_Risk.risk_object) as risk_objects dc(All_Risk.threat_object) as threat_objects count from datamodel=Risk.All_Risk where * All_Risk.risk_object_type=""*"" (All_Risk.risk_object=""*"" OR risk_object=""*"") by source | sort 1000 - count risk_score",,,"threat_object_content_dev"
+tbd,"eventtype=risk_notables",,,,,"threat_object_fun",,"`notable` | search eventtype=risk_notables | eventstats count as sum | stats count(eval(status_label=""New"")) as rule_count values(sum) as sum by orig_source | eval notable_percent = rule_count / sum | sort - notable_percent | eval notable_percent=round(notable_percent*100) | rename orig_source as source",,,"threat_object_content_dev"
+tbd,,,,,,"threat_object_fun",,"| rest splunk_server=local count=0 /services/saved/searches 
+  | search title=""$risk_drilldown$"" | rename dispatch.earliest_time as early_time qualifiedSearch as search_spl
+  | table search_spl early_time",,,"threat_object_content_dev"
+tbd,,,,,,"threat_object_fun",,"| tstats summariesonly=true count sum(All_Risk.calculated_risk_score) as risk_sum values(All_Risk.calculated_risk_score) as scores values(All_Risk.threat_object_type) as threat_object_type from datamodel=Risk.All_Risk where All_Risk.$search_values$ IN (""$values_search$"") by All_Risk.$search_values$,All_Risk.risk_object,source,All_Risk.threat_object | `drop_dm_object_name(""All_Risk"")` | eval threat_object_type=mvjoin(threat_object_type,""+"") , threat_object_full=threat_object , threat_object=if(len(threat_object)&lt;90, threat_object, substr(threat_object,1,90).""..."") , threat_object=threat_object_type."":  "".threat_object | stats values(threat_object) as threat_object values(threat_object_full) as threat_object_full sum(count) as count sum(risk_sum) as risk_sum by $search_values$,risk_object,source | eval threat_object=""--= "".source."" =--||"".mvjoin(threat_object,""||"") | rex mode=sed field=threat_object ""s/\|\|/\n/g"" | stats values(threat_object) as threat_object sum(count) as count sum(risk_sum) as risk_sum values(threat_object_full) as threat_object_full by $search_values$,risk_object  | eval threat_object_full=mvjoin(threat_object_full,""&amp;&amp;"")",,,"threat_object_content_dev"
+tbd,,,,,,"threat_object_fun",,"| tstats summariesonly=true count sum(All_Risk.calculated_risk_score) as risk_sum values(All_Risk.calculated_risk_score) as scores values(All_Risk.threat_object_type) as threat_object_type from datamodel=Risk.All_Risk where All_Risk.risk_object IN (""$values_search$"") by All_Risk.risk_object,source,All_Risk.threat_object | `drop_dm_object_name(""All_Risk"")` | eval threat_object_type=mvjoin(threat_object_type,""+"") , threat_object_full=threat_object , threat_object=if(len(threat_object)&lt;90, threat_object, substr(threat_object,1,90).""..."") , threat_object=threat_object_type."":  "".threat_object | stats values(threat_object) as threat_object values(threat_object_full) as threat_object_full sum(count) as count sum(risk_sum) as risk_sum by risk_object,source | eval threat_object=""--= "".source."" =--||"".mvjoin(threat_object,""||"") | rex mode=sed field=threat_object ""s/\|\|/\n/g"" | stats values(threat_object) as threat_object sum(count) as count sum(risk_sum) as risk_sum values(threat_object_full) as threat_object_full by risk_object  | eval threat_object_full=mvjoin(threat_object_full,""&amp;&amp;"")",,,"threat_object_content_dev"
+tbd,,,,,,"threat_object_fun",,"
+      | tstats summariesonly=true count dc(All_Risk.risk_object) as dc_r_obj dc(All_Risk.threat_object) as dc_t_obj dc(All_Risk.src) as dc_src dc(All_Risk.dest) as dc_dest dc(All_Risk.user) as dc_users dc(All_Risk.user_bunit) as dc_bunit sum(All_Risk.calculated_risk_score) as risk_sum values(All_Risk.calculated_risk_score) as scores values(All_Risk.risk_object) as risk_object values(All_Risk.src) as src values(All_Risk.dest) as dest values(All_Risk.user) as user values(All_Risk.user_bunit) as bunit from datamodel=Risk.All_Risk where source=""$risk_drilldown$"" by All_Risk.threat_object,All_Risk.threat_object_type | `drop_dm_object_name(""All_Risk"")` | sort 1000 - count | eval threat_object_full=threat_object | eval type=threat_object_type | eval threat_object=if(len(threat_object)&lt;50, threat_object, substr(threat_object,1,50).""..."")",,,"threat_object_content_dev"
+tbd,,,"index=risk",,,"threat_object_fun",,"index=risk (certificate_common_name=* OR
+    certificate_organization=* OR
+    certificate_serial=* OR
+    certificate_unit=* OR
+    domain=* OR
+    email=* OR
+    email_subject=* OR
+    file_hash=* OR
+    file_name=* OR
+    http_user_agent=* OR
+    process=* OR
+    process_hash=* OR
+    process_name=* OR
+    parent_process_name=* OR
+    parent_process=* OR
+    registry_path=* OR
+    registry_value_name=* OR
+    registry_value_text=* OR
+    service=* OR
+    url=* OR
+    command=*) 
+| stats 
+    count(eval(like(certificate_common_name,""%""))) as count_certificate_common_name
+    count(eval(like(certificate_organization,""%""))) as count_certificate_organization
+    count(eval(like(certificate_serial,""%""))) as count_certificate_serial
+    count(eval(like(certificate_unit,""%""))) as count_certificate_unit
+    count(eval(like(domain,""%""))) as count_domain
+    count(eval(like(email,""%""))) as count_email
+    count(eval(like(email_subject,""%""))) as count_email_subject
+    count(eval(like(file_hash,""%""))) as count_file_hash
+    count(eval(like(file_name,""%""))) as count_file_name
+    count(eval(like(http_user_agent,""%""))) as count_http_user_agent
+    count(eval(like(process,""%""))) as count_process
+    count(eval(like(process_hash,""%""))) as count_process_hash
+    count(eval(like(process_name,""%""))) as count_process_name
+    count(eval(like(parent_process_name,""%""))) as count_parent_process_name
+    count(eval(like(parent_process,""%""))) as count_parent_process
+    count(eval(like(registry_path,""%""))) as count_registry_path
+    count(eval(like(registry_value_name,""%""))) as count_registry_value_name
+    count(eval(like(registry_value_text,""%""))) as count_registry_value_text
+    count(eval(like(service,""%""))) as count_service
+    count(eval(like(url,""%""))) as count_url
+    count(eval(like(command,""%""))) as count_command,
+    values(threat_object_type) as threat_object_type,
+    count
+    by source 
+| eval observed_threat_object_types=mvappend(
+    if(count_certificate_common_name&gt;0, ""certificate_common_name="".count_certificate_common_name, """"),
+    if(count_certificate_organization&gt;0, ""certificate_organization="".count_certificate_organization, """"),
+    if(count_certificate_serial&gt;0, ""certificate_serial="".count_certificate_serial, """"),
+    if(count_certificate_unit&gt;0, ""certificate_unit="".count_certificate_unit, """"),
+    if(count_domain&gt;0, ""domain="".count_domain, """"),
+    if(count_email&gt;0, ""email="".count_email, """"),
+    if(count_email_subject&gt;0, ""email_subject="".count_email_subject, """"),
+    if(count_file_hash&gt;0, ""file_hash="".count_file_hash, """"),
+    if(count_file_name&gt;0, ""file_name="".count_file_name, """"),
+    if(count_http_user_agent&gt;0, ""http_user_agent="".count_http_user_agent, """"),
+    if(count_process&gt;0, ""process="".count_process, """"),
+    if(count_process_hash&gt;0, ""process_hash="".count_process_hash, """"),
+    if(count_process_name&gt;0, ""process_name="".count_process_name, """"),
+    if(count_parent_process_name&gt;0, ""parent_process_name="".count_parent_process_name, """"),
+    if(count_parent_process&gt;0, ""parent_process="".count_parent_process, """"),
+    if(count_registry_path&gt;0, ""registry_path="".count_registry_path, """"),
+    if(count_registry_value_name&gt;0, ""registry_value_name="".count_registry_value_name, """"),
+    if(count_registry_value_text&gt;0, ""registry_value_text="".count_registry_value_text, """"),
+    if(count_service&gt;0, ""service="".count_service, """"),
+    if(count_url&gt;0, ""url="".count_url, """"),
+    if(count_command&gt;0, ""command="".count_command, """"),
+    """")
+| stats values(count) as event_count, values(observed_threat_object_types) as observed_threat_object_types, values(threat_object_type) as existing_threat_object_types by source 
+| sort - count",,,"threat_object_content_dev"
+tbd,,,,,,"threat_object_fun",,"| rest splunk_server=local count=0 /services/saved/searches 
+| where match('action.correlationsearch.enabled', ""1|[Tt]|[Tt][Rr][Uu][Ee]"") AND NOT disabled=1
+| table title, disabled, alert.track, action.risk, cron_schedule, description, eai:acl.app, action.risk.param._risk
+| search action.risk.param._risk=""*threat_object*""
+| eval _temp=split(replace(replace('action.risk.param._risk',""\["",""""),""\]"",""""), ""{"")
+| eval _temp2=mvfilter(_temp!="""")
+| eval _temp2=mvindex(_temp2, mvfind(_temp2,""threat_""))
+| eval _temp3=split(_temp2,"","")
+| replace ""*}"" with ""*"" in _temp3
+| eval threat_objects=_temp3
+| fields - action.risk.param._risk, alert.track, action.risk",,,"threat_object_content_dev"
+tbd,,,,,,"threat_object_fun",,"| rest splunk_server=local count=0 /services/saved/searches 
+| where match('action.correlationsearch.enabled', ""1|[Tt]|[Tt][Rr][Uu][Ee]"") AND NOT disabled=1 AND 'action.risk'=1
+| table title, alert.track, action.risk, cron_schedule, description, eai:acl.app, action.risk.param._risk
+| search action.risk.param._risk!=""*threat_object*""
+| fields - action.risk.param._risk, alert.track, action.risk",,,"threat_object_content_dev"
+tbd,,,,,,"threat_object_fun",,"| tstats `summariesonly` count
+    from datamodel=Risk.All_Risk 
+    where (All_Risk.threat_object_type!=""unknown"" All_Risk.threat_object_type!="""" All_Risk.threat_object=$input_threat_object|s$)
+    by All_Risk.threat_object, _time
+| `drop_dm_object_name(""All_Risk"")`
+| search threat_object=$input_threat_object|s$
+| timechart span=1d sum(count) as count BY threat_object",,,"threat_object_detail"
+tbd,,,,,,"threat_object_fun",,"| tstats `summariesonly` count, values(source) as detections
+    from datamodel=Risk.All_Risk 
+    where (All_Risk.threat_object_type!=""unknown"" All_Risk.threat_object_type!="""" All_Risk.threat_object=$input_threat_object|s$)
+    by All_Risk.threat_object, All_Risk.threat_object_type
+| `drop_dm_object_name(""All_Risk"")`
+| search threat_object=$input_threat_object|s$",,,"threat_object_detail"
+tbd,,,,,,"threat_object_fun",,"| tstats `summariesonly` count, values(source) as detections
+    from datamodel=Risk.All_Risk 
+    where (All_Risk.threat_object_type!=""unknown"" All_Risk.threat_object_type!="""" All_Risk.threat_object=$input_threat_object|s$)
+    by All_Risk.threat_object, All_Risk.threat_object_type, All_Risk.risk_object, All_Risk.risk_object_type
+| `drop_dm_object_name(""All_Risk"")`
+| search threat_object=$input_threat_object|s$
+| fields - threat_object, threat_object_type
+| dedup risk_object, risk_object_type, detections
+| sort - count",,,"threat_object_detail"
+tbd,,,,,,"threat_object_fun",,"| tstats `summariesonly` count
+    from datamodel=Risk.All_Risk 
+    where (All_Risk.threat_object_type!=""unknown"" All_Risk.threat_object_type!="""")
+    by All_Risk.threat_object_type
+| `drop_dm_object_name(""All_Risk"")`",,,"threat_object_overview"
+tbd,,,,,,"threat_object_fun",,"| tstats `summariesonly` count
+    from datamodel=Risk.All_Risk 
+    where (All_Risk.threat_object_type!=""unknown"" All_Risk.threat_object_type!="""")
+    by _time All_Risk.threat_object_type
+| `drop_dm_object_name(""All_Risk"")`
+| chart bins=75 sum(count) as count over _time by threat_object_type",,,"threat_object_overview"
+tbd,,,,,,"threat_object_fun",,"| tstats `summariesonly` count as total,
+    dc(All_Risk.risk_object) as distinct_risk_objects,
+    values(source) as detections
+    from datamodel=Risk.All_Risk 
+    where (All_Risk.threat_object_type!=""unknown"" All_Risk.threat_object_type!="""")
+    by All_Risk.threat_object 
+| `drop_dm_object_name(""All_Risk"")`
+| sort 100 - total
+| eval threat_object_full = threat_object
+| `line_shorten(threat_object)`",,,"threat_object_overview"
+tbd,,,,,,"threat_object_fun",,"| tstats `summariesonly` count as total,
+    dc(All_Risk.risk_object) as distinct_risk_objects,
+    values(source) as detections
+    from datamodel=Risk.All_Risk 
+    where (All_Risk.threat_object_type!=""unknown"" All_Risk.threat_object_type!="""")
+    by All_Risk.threat_object 
+| `drop_dm_object_name(""All_Risk"")`
+| sort 100 total
+| eval threat_object_full = threat_object
+| `line_shorten(threat_object)`",,,"threat_object_overview"
+tbd,,,,,,"threat_object_fun",,"| tstats `summariesonly` count, values(source) as detections, values(All_Risk.threat_object_type) as threat_object_type, dc(All_Risk.threat_object_type) as threat_object_type_count
+    from datamodel=Risk.All_Risk 
+    where (All_Risk.threat_object_type!=""unknown"" All_Risk.threat_object_type!="""" All_Risk.threat_object_type!=file_name) ( 
+    [| tstats `summariesonly` count, values(source) as detections
+        from datamodel=Risk.All_Risk 
+        where (All_Risk.threat_object_type!=""unknown"" All_Risk.threat_object_type!="""" All_Risk.threat_object_type=file_name)
+        by All_Risk.threat_object, All_Risk.threat_object_type 
+    | `drop_dm_object_name(""All_Risk"")` 
+    | fields threat_object 
+    | eval threat_object=""*"".mvindex(split(threat_object,""\\""), mvcount(split(threat_object,""\\""))-1).""*"" 
+    | rename threat_object AS ""All_Risk.threat_object""])
+    by All_Risk.threat_object 
+| `drop_dm_object_name(""All_Risk"")`
+| sort - threat_object_type_count",,,"threat_object_overview"
+tbd,,,,,,"threat_object_fun",,"
+      | tstats summariesonly=true count dc(All_Risk.risk_object) as dc_r_obj dc(All_Risk.threat_object) as dc_t_obj dc(All_Risk.src) as dc_src dc(All_Risk.dest) as dc_dest dc(All_Risk.user) as dc_users dc(All_Risk.user_bunit) as dc_bunit sum(All_Risk.calculated_risk_score) as risk_sum values(All_Risk.calculated_risk_score) as scores values(All_Risk.risk_object) as risk_object values(All_Risk.src) as src values(All_Risk.dest) as dest values(All_Risk.user) as user values(All_Risk.user_bunit) as bunit from datamodel=Risk.All_Risk where All_Risk.threat_object IN (""$threat_token$"") by All_Risk.threat_object,All_Risk.threat_object_type,source | `drop_dm_object_name(""All_Risk"")` 
+    ",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval num_objects = if(isint($num_objects$),""$num_objects$"",0) | table num_objects
+          ",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval source_count = if(isint($source_count$),""$source_count$"",0) | table source_count",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"| makeresults 
+| eval risk_objects = if(isint($ro_count$),""$ro_count$"",0)
+| table risk_objects",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"| makeresults | eval related_count = if(isint($related_count$),""$related_count$"",0) | table related_count",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"
+          | tstats summariesonly=t count values(All_Risk.risk_message) as risk_message sum(All_Risk.calculated_risk_score) as risk_score values(source) as sources dc(All_Risk.threat_object) as dc_t_obj values(All_Risk.threat_object_type) as t_types values(All_Risk.threat_object) as threat_object values(All_Risk.risk_object_type) as risk_object_type from datamodel=Risk.All_Risk where All_Risk.threat_object IN (""$threat_token$"") groupby All_Risk.risk_object All_Risk.calculated_risk_score source _time span=30d | `drop_dm_object_name(""All_Risk"")` | table * | dedup risk_message | eval risk_message=""-----=== "".source."" ===-----||"".""===== THREAT OBJECTS ====||"".mvjoin(threat_object,""||"").""||===== RISK MESSAGES =====||"".mvjoin(risk_message,""||"").""|| ||"" | rex mode=sed field=risk_message ""s/\|\|/\n/g"" | stats sum(count) as events sum(dc_t_obj) as dc_t_obj values(t_types) as t_types sum(risk_score) as risk_score values(sources) as sources values(risk_message) as risk_message by risk_object | eventstats dc(risk_object) as ro_count dc(sources) as source_count sum(events) as num_objects
+          ",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"
+            | tstats summariesonly=true count sum(All_Risk.calculated_risk_score) as risk_sum values(All_Risk.calculated_risk_score) as scores values(All_Risk.threat_object_type) as threat_object_type from datamodel=Risk.All_Risk where All_Risk.$search_values$ IN (""$values_search$"") by All_Risk.$search_values$,All_Risk.risk_object,source,All_Risk.threat_object | `drop_dm_object_name(""All_Risk"")` | eval threat_object_type=mvjoin(threat_object_type,""+"") , threat_object_full=threat_object , threat_object=if(len(threat_object)&lt;90, threat_object, substr(threat_object,1,90).""..."") , threat_object=threat_object_type."":  "".threat_object | stats values(threat_object) as threat_object values(threat_object_full) as threat_object_full sum(count) as count sum(risk_sum) as risk_sum by $search_values$,risk_object,source | eval threat_object=""--= "".source."" =--||"".mvjoin(threat_object,""||"") | rex mode=sed field=threat_object ""s/\|\|/\n/g"" | stats values(threat_object) as threat_object sum(count) as count sum(risk_sum) as risk_sum values(threat_object_full) as threat_object_full by $search_values$,risk_object  | eval threat_object_full=mvjoin(threat_object_full,""&amp;&amp;"")
+          ",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"
+            | tstats summariesonly=true count sum(All_Risk.calculated_risk_score) as risk_sum values(All_Risk.calculated_risk_score) as scores values(All_Risk.threat_object_type) as threat_object_type from datamodel=Risk.All_Risk where All_Risk.risk_object IN (""$values_search$"") by All_Risk.risk_object,source,All_Risk.threat_object | `drop_dm_object_name(""All_Risk"")` | eval threat_object_type=mvjoin(threat_object_type,""+"") , threat_object_full=threat_object , threat_object=if(len(threat_object)&lt;90, threat_object, substr(threat_object,1,90).""..."") , threat_object=threat_object_type."":  "".threat_object | stats values(threat_object) as threat_object values(threat_object_full) as threat_object_full sum(count) as count sum(risk_sum) as risk_sum by risk_object,source | eval threat_object=""--= "".source."" =--||"".mvjoin(threat_object,""||"") | rex mode=sed field=threat_object ""s/\|\|/\n/g"" | stats values(threat_object) as threat_object sum(count) as count sum(risk_sum) as risk_sum values(threat_object_full) as threat_object_full by risk_object  | eval threat_object_full=mvjoin(threat_object_full,""&amp;&amp;"")
+          ",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"| search threat_object IN (""$threat_token$"") | sort 1000 + count | eval threat_object_full=threat_object | eval type=threat_object_type | eval threat_object=if(len(threat_object)&lt;50, threat_object, substr(threat_object,1,50).""..."")",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"| search NOT threat_object IN (""$threat_token$"") | sort 1000 + count | eval threat_object_full=threat_object | eval type=threat_object_type | eval threat_object=if(len(threat_object)&lt;50, threat_object, substr(threat_object,1,50).""..."") | eventstats dc(threat_object_full) as dc_related_objects",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"
+  | rest splunk_server=local count=0 /services/saved/searches 
+  | search title=""$risk_drilldown$"" | rename dispatch.earliest_time as early_time qualifiedSearch as search_spl
+  | table description search_spl early_time
+  | eval search_spl = if(match(search_spl,""^(|\s)(tstats|from).*""),""|"".search_spl,search_spl)
+          ",,,"threat_object_prevalence"
+tbd,,,,,,"threat_object_fun",,"| tstats summariesonly=false sum(All_Risk.calculated_risk_score) as risk_score,dc(All_Risk.risk_object) as risk_objects,count from datamodel=Risk.All_Risk where All_Risk.threat_object IN(""$threat_token$"") All_Risk.risk_object_type=""*"" (All_Risk.risk_object=""*"" OR risk_object=""*"") by source | sort 1000 - count,risk_score",,,"threat_object_prevalence"
+tbd,,,"index=risk",,,"threat_object_fun",,"index=risk risk_object=""$input_risk_object$""
+| eval threat_object_and_type=mvzip(threat_object_type, threat_object, ""="")
+| table source, risk_object, threat_object_and_type, threat_object_type, threat_object
+| fields threat_object_type
+| mvexpand threat_object_type
+| dedup threat_object_type
+| sort threat_object_type",,,"threat_object_soar"
+tbd,,,"index=risk",,,"threat_object_fun",,"index=risk risk_object=""$input_risk_object$""
+| eval threat_object_and_type=mvzip(threat_object_type, threat_object, ""="")
+| table source, risk_object, threat_object_and_type, threat_object_type, threat_object
+| mvexpand threat_object_and_type
+```| stats count, values(source) as detections, values(threat_object_and_type) as threat_object_and_type by risk_object```
+| fields threat_object_and_type
+| where threat_object_and_type!=""""
+| dedup threat_object_and_type
+| sort threat_object_and_type
+| search threat_object_and_type=""$input_threat_object_type$*""
+| rename threat_object_and_type AS IOBs",,,"threat_object_soar"
 tbd,,,,,,"lame_training",,"| makeresults | eval foo = ""bar""",,,urlgenerator
 tbd,,,,,,"splunk_monitoring_console",,"
       | rest splunk_server_group=dmc_group_indexer splunk_server_group=""$group$"" /services/data/index-volumes/$volume$

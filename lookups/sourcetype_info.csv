@@ -1,9 +1,9 @@
 description,index,sourcetype,usegroup
-tbd,lame_eventgen,lame_dns,tbd
-tbd,lame_eventgen,lame_files,tbd
-tbd,lame_eventgen,lame_http,tbd
-tbd,lame_eventgen,lame_kerberos,tbd
-tbd,lame_eventgen,lame_rdp,tbd
-tbd,lame_eventgen,lame_software,tbd
-tbd,corelight,corelight_conn,tbd
-tbd,corelight,corelight_http,tbd
+tbd,"lame_eventgen","lame_conn",tbd
+tbd,"lame_eventgen","lame_dns",tbd
+tbd,"lame_eventgen","lame_files",tbd
+tbd,"lame_eventgen","lame_http",tbd
+tbd,"lame_eventgen","lame_kerberos",tbd
+tbd,"lame_eventgen","lame_rdp",tbd
+tbd,"lame_eventgen","lame_software",tbd
+tbd,summary,stash,tbd

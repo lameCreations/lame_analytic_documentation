@@ -5,7 +5,7 @@
       <view name="sourcetype_information" />
 	  <view name="summary_index_information" />
       <view name="analytic_information" />
-      <a href="../../static/app/cs_analytic_documentation/CS_doc.htm">CyberSentry Documentation</a>
+      <a href="../../static/app/lame_analytic_documentation/CS_doc.htm">CyberSentry Documentation</a>
       
     </collection>
       

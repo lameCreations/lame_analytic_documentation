@@ -85,3 +85,31 @@ modtime = 1690155915.018015000
 [lookups/sourcetype_info.csv]
 version = 9.1.0.1
 modtime = 1690242210.773221000
+
+[savedsearches/fill_index_info_csv]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.1.0.1
+modtime = 1690260815.720155000
+
+[savedsearches/fill_source_info_csv]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.1.0.1
+modtime = 1690261021.569324000
+
+[savedsearches/fill_sourcetype_info_csv]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.1.0.1
+modtime = 1690261167.250657000
+
+[savedsearches/fill_analytics_info_csv]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.1.0.1
+modtime = 1690261515.885962000
