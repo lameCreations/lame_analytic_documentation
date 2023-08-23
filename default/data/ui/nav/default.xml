@@ -3,8 +3,11 @@
     <collection label="View Knowledge Objects">
       <view name="index_information" />
       <view name="sourcetype_information" />
-	  <view name="summary_index_information" />
+      <view name="summary_index_information" />
+      <view name="saved_search_info" />
+      <view name="dashboard_info" />
       <view name="analytic_information" />
+      <view name="analytics_mapped_to_mitre" />
       <a href="../../static/app/lame_analytic_documentation/CS_doc.htm">CyberSentry Documentation</a>
       
     </collection>
