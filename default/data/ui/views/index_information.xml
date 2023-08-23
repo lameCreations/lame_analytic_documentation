@@ -12,9 +12,8 @@
           <latest>now</latest>
         </search>
         <option name="drilldown">cell</option>
-        <option name="refresh.display">progressbar</option>
         <drilldown>
-          <link target="_blank">/app/lame_analytic_documentation/document_indexes?form.index=$row.index$&amp;form.description=$row.description$&amp;form.usegroup=$row.usegroup$&amp;form.the_key=$click.the_key$</link>
+          <link target="_blank">/app/lame_analytic_documentation/document_indexes?form.index=$row.index$&amp;form.description=$row.description$&amp;form.usegroup=$row.usegroup$&amp;form.the_key=$row.the_key$</link>
         </drilldown>
       </table>
     </panel>

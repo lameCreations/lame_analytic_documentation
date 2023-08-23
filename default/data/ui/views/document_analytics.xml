@@ -14,6 +14,11 @@
     </input>
     <input type="dropdown" token="usegroup">
       <label>Use Group</label>
+      <fieldForLabel>usegroup</fieldForLabel>
+      <fieldForValue>usegroup</fieldForValue>
+      <search>
+        <query>| inputlookup usegroup.csv</query>
+      </search>
     </input>
   </fieldset>
   <row>
@@ -29,6 +34,7 @@
         <search>
           <query>| inputlookup analytics_info | search _key = $the_key$
 | eval description = "$description$"
+| eval usegroup = "$usegroup$"
 | outputlookup analytics_info append=true</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>

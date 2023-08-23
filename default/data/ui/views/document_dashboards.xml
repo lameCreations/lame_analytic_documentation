@@ -1,34 +1,38 @@
-<form version="1.1" theme="light">
-  <label>Document Indexes</label>
+<form version="1.1">
+  <label>Document Dashboards</label>
+  <description>Gives a Gui interface to Document Splunk Dashboards</description>
   <fieldset submitButton="true" autoRun="false">
-    <input type="text" token="index">
-      <label>Index</label>
+    <input type="text" token="urlField">
+      <label>URL Name</label>
     </input>
     <input type="text" token="description">
       <label>Description</label>
-      <default>tbd</default>
-      <initialValue>tbd</initialValue>
     </input>
-    <input type="dropdown" token="usegroup">
+    <input type="text" token="mitre">
+      <label>MITRE Technique</label>
+    </input>
+    <input type="dropdown" token="usecase">
       <label>Use Group</label>
       <fieldForLabel>usegroup</fieldForLabel>
       <fieldForValue>usegroup</fieldForValue>
       <search>
         <query>| inputlookup usegroup.csv</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
       </search>
     </input>
     <input type="text" token="the_key">
-      <label>Key</label>
+      <label>The Key</label>
     </input>
   </fieldset>
   <row>
     <panel>
       <table>
         <search>
-          <query>| inputlookup index_info | search _key = $the_key$
-| eval description = "$description$"
-| eval usegroup = "$usegroup$"
-| outputlookup index_info append=true</query>
+          <query>| inputlookup dashboard_info | search _key = $the_key$
+| eval details = "$description$"
+| eval usecase = "$usecase$"
+| outputlookup dashboard_info append=true</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>

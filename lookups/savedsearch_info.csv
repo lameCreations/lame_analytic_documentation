@@ -1,0 +1,33 @@
+actions,app,"cron_schedule",details,mitre,summaryIndex,title,usecase
+"create_alert",search,"45 * * * *",tbd,TBD,,"ame test",TBD
+"","Splunk_SA_CIM","",tbd,TBD,,"CIM - Data Model Acceleration Details",TBD
+"","Splunk_SA_CIM","",tbd,TBD,,"CIM - Top Data Model Accelerations",TBD
+"","Splunk_SA_CIM","",tbd,TBD,,"CIM - Top Data Model Accelerations By Run Duration",TBD
+"","Splunk_SA_CIM","",tbd,TBD,,"CIM - Top Data Model Accelerations By Size",TBD
+"","Splunk_SA_CIM","5,20,35,50 * * * *",tbd,TBD,,"CIM - Vendor Product Tracker - Lookup Gen",TBD
+"",search,"",tbd,TBD,,"curl_test",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"fill_analytics_info_csv",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"fill_dashboard_info_csv",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"fill_index_info_csv",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"fill_source_info_csv",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"fill_sourcetype_info_csv",TBD
+"","lame_documentation","","Saved Search for generating the details about all of the dashboards in the environment.","n/a",,"Generate Dashboard Details",dataAdmin
+"","lame_documentation","","Saved search to generate the eventtype information for the entire environment","n/a",,"Generate EventType Details",dataAdmin
+"","lame_documentation","","Saved Search for generating the details about all of the indexes in the environment.","n/a",,"Generate Index Details",dataAdmin
+"","lame_documentation","","Saved Search for generating the details about all of the macros in the environment.","n/a",,"Generate Macro Details",dataAdmin
+"","lame_documentation","","Saved Search for generating the details about all of the saved searches in the environment.","n/a",,"Generate Saved Search Details",dataAdmin
+"","lame_documentation","","Saved Search for generating the details about all of the sources in the environment.","n/a",,"Generate Source Details",training
+"","lame_documentation","","Saved Search for generating the details about all of the sourcetypes in the environment.","n/a",,"Generate_sourcetype_details",dataAdmin
+"",search,"",tbd,TBD,,metricsReport,TBD
+"","CyberSentry_Training","0 12 * * *",tbd,TBD,,"Populate_All_Sourcetypes",TBD
+"","CyberSentry_Training","0 13 * * *",tbd,TBD,,"Populate_Asset_Summary_Sources Clone",TBD
+"","CyberSentry_Training","0 14 * * *",tbd,TBD,,"Populate_Central_Summary_Sources",TBD
+"","CyberSentry_Training","0 15 * * *",tbd,TBD,,"Populate_Inventory_Sources Clone",TBD
+"","log_analysis_made_easy","0 */4 * * *",tbd,TBD,,"Scheduled_Intrusion_Detection_Alerts",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"update_analytics_info",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"update_dashboard_info",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"update_index_info",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"update_source_info",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"update_sourcetype_info",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"fill_savedsearch_info_csv",TBD
+"","lame_analytic_documentation","",tbd,TBD,,"update_savedsearch_info",TBD

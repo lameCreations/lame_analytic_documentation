@@ -1,0 +1,45 @@
+<form version="1.1">
+  <label>Document Saved Searches</label>
+  <description>Gui interface for modifying saved search information on Splunk</description>
+  <fieldset submitButton="true">
+    <input type="text" token="the_key">
+      <label>The Key</label>
+    </input>
+    <input type="text" token="title">
+      <label>Title</label>
+    </input>
+    <input type="text" token="mitre">
+      <label>MITRE Technique</label>
+    </input>
+    <input type="text" token="details">
+      <label>Details</label>
+    </input>
+    <input type="dropdown" token="usecase">
+      <label>Use Case</label>
+      <fieldForLabel>usegroup</fieldForLabel>
+      <fieldForValue>usegroup</fieldForValue>
+      <search>
+        <query>| inputlookup usegroup.csv</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup savedsearch_info | search _key = $the_key$
+| eval details = "$details$"
+| eval usecase = "$usecase$"
+| eval mitre = "$mitre$"
+| outputlookup savedsearch_info append=true</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

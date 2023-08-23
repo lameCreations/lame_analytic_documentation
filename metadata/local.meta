@@ -1,10 +1,10 @@
 [app/ui]
-version = 9.1.0.1
-modtime = 1689347494.242034000
+version = 9.0.3
+modtime = 1692751093.814839000
 
 [app/launcher]
-version = 9.1.0.1
-modtime = 1689347494.243038000
+version = 9.0.3
+modtime = 1692751093.831405000
 
 [savedsearches/update_index_info]
 access = read : [ * ], write : [ * ]
@@ -29,23 +29,23 @@ modtime = 1689350235.600486000
 
 [views/document_sourcetypes]
 owner = admin
-version = 9.1.0.1
-modtime = 1689388087.450327000
+version = 9.0.3
+modtime = 1692491407.803928000
 
 [views/sourcetype_information]
 owner = admin
-version = 9.1.0.1
-modtime = 1689370474.219173000
+version = 9.0.3
+modtime = 1692491226.188627000
 
 [views/index_information]
 owner = admin
-version = 9.1.0.1
-modtime = 1689370416.465409000
+version = 9.0.3
+modtime = 1692490796.868237000
 
 [views/summary_index_information]
 owner = admin
-version = 9.1.0.1
-modtime = 1689370534.487152000
+version = 9.0.3
+modtime = 1692491691.744181000
 
 [views/analytic_information]
 owner = admin
@@ -54,18 +54,18 @@ modtime = 1689370021.902017000
 
 [views/document_indexes]
 owner = admin
-version = 9.1.0.1
-modtime = 1689387952.266051000
+version = 9.0.3
+modtime = 1692491492.518537000
 
 [views/document_summary_indexes]
 owner = admin
-version = 9.1.0.1
-modtime = 1689388144.617522000
+version = 9.0.3
+modtime = 1692491748.409500000
 
 [views/document_analytics]
 owner = admin
-version = 9.1.0.1
-modtime = 1689387848.072032000
+version = 9.0.3
+modtime = 1692492011.748172000
 
 [savedsearches/update_analytics_info]
 access = read : [ * ], write : [ * ]
@@ -97,8 +97,8 @@ modtime = 1690260815.720155000
 access = read : [ * ], write : [ admin ]
 export = none
 owner = admin
-version = 9.1.0.1
-modtime = 1690261021.569324000
+version = 9.0.3
+modtime = 1692330884.077093000
 
 [savedsearches/fill_sourcetype_info_csv]
 access = read : [ * ], write : [ admin ]
@@ -113,3 +113,94 @@ export = none
 owner = admin
 version = 9.1.0.1
 modtime = 1690261515.885962000
+
+[collections/dashboard_info]
+owner = admin
+version = 9.0.3
+modtime = 1692287275.590401000
+
+[transforms/dashboard_info]
+owner = admin
+version = 9.0.3
+modtime = 1692286890.934564000
+
+[savedsearches/update_dashboard_info]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.0.3
+modtime = 1692287598.132570000
+
+[savedsearches/fill_dashboard_info_csv]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.0.3
+modtime = 1692287719.379173000
+
+[collections/savedsearch_info]
+owner = admin
+version = 9.0.3
+modtime = 1692289386.249104000
+
+[transforms/savedsearch_info]
+owner = admin
+version = 9.0.3
+modtime = 1692288936.210276000
+
+[savedsearches/update_savedsearch_info]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.0.3
+modtime = 1692289261.658732000
+
+[savedsearches/fill_savedsearch_info_csv]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 9.0.3
+modtime = 1692289360.723778000
+
+[views/analytics_mapped_to_mitre]
+owner = admin
+version = 9.0.3
+modtime = 1692331908.264200000
+
+[collections/source_info]
+version = 9.0.3
+modtime = 1692367218.776258000
+
+[collections/usegroups_info.csv]
+owner = admin
+version = 9.0.3
+modtime = 1692457391.889685000
+
+[lookups/usegroup.csv]
+owner = admin
+version = 9.0.3
+modtime = 1692458432.733324000
+
+[views/dashboard_info]
+owner = admin
+version = 9.0.3
+modtime = 1692502113.196344000
+
+[views/document_dashboards]
+owner = admin
+version = 9.0.3
+modtime = 1692502785.176372000
+
+[views/saved_search_info]
+owner = admin
+version = 9.0.3
+modtime = 1692504121.793161000
+
+[views/document_saved_searches]
+owner = admin
+version = 9.0.3
+modtime = 1692504152.807219000
+
+[app/package/check_for_updates]
+version = 9.0.3
+modtime = 1692751093.842076000

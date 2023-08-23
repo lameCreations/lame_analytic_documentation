@@ -1,0 +1,45 @@
+<dashboard version="1.1">
+  <label>Analytics Mapped To MITRE</label>
+
+
+  <row>
+    <panel>
+      <viz type="mitre_attck_heatmap.mitre_attck_heatmap">
+        <search>
+          <query>| inputlookup savedsearch_info 
+| eval foo = replace(mitre, " ", "")
+| eval foo = replace(foo, "\[", "")
+| eval foo = replace(foo, "]", "")
+| eval bar = split(foo, ",")
+| mvexpand bar
+
+| stats values(title) as description count by bar
+| rename bar as id
+| append [ | inputlookup dashboard_info
+| eval foo = replace(mitre, " ", "")
+| eval foo = replace(foo, "\[", "")
+| eval foo = replace(foo, "]", "")
+| eval bar = split(foo, ",")
+| mvexpand bar
+
+| stats values(id) as description count by bar
+| rename bar as id
+
+| table id, count, description]
+</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="mitre_attck_heatmap.mitre_attck_heatmap.display">id</option>
+        <option name="mitre_attck_heatmap.mitre_attck_heatmap.endColor">#B63457</option>
+        <option name="mitre_attck_heatmap.mitre_attck_heatmap.endVal">1000</option>
+        <option name="mitre_attck_heatmap.mitre_attck_heatmap.midColor">#0C1587</option>
+        <option name="mitre_attck_heatmap.mitre_attck_heatmap.sortKey">data-name</option>
+        <option name="mitre_attck_heatmap.mitre_attck_heatmap.startColor">#22908D</option>
+        <option name="mitre_attck_heatmap.mitre_attck_heatmap.theme">light</option>
+        <option name="refresh.display">progressbar</option>
+      </viz>
+    </panel>
+  </row>
+</dashboard>

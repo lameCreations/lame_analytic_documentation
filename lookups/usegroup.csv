@@ -1,0 +1,4 @@
+usegroup,description
+analyst,users that analyze the data in Splunk to make information decisions
+training,to help onboard and understand Splunk better
+system administration,users that are trying to ensure Splunk is functioning properly

@@ -1,0 +1,22 @@
+<dashboard version="1.1">
+  <label>Saved Search Info</label>
+  <description>Information about Splunk's Saved Searches</description>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup savedsearch_info
+| rename _key as the_key
+| table the_key, title, app, actions, cron_schedule, details, mitre, usecase</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">/app/lame_analytic_documentation/document_saved_searches?form.title=$row.title$&amp;form.details=$row.details$&amp;form.mitre=$row.mitre$&amp;form.usecase=$row.usecase$&amp;form.the_key=$row.the_key$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

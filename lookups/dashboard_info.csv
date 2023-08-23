@@ -1,0 +1,97 @@
+app,details,mitre,owner,urlField,usecase
+"lame_training","Covers how to use eventstats in queries that may be useful to an analyst","[t1190],[T5112]",admin,"12_help_stats_eventstats_streamstats",training
+"log_analysis_made_easy",tbd,tbd,admin,"about_this_dashboard",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"account_login_for_an_ip",tbd
+"lame_documentation",tbd,tbd,admin,"add_dashboard_details",tbd
+"lame_documentation",tbd,tbd,admin,"add_saved_search_details",tbd
+"lame_documentation",tbd,tbd,admin,"add_sourcetype_analytics",tbd
+"lame_documentation",tbd,tbd,admin,"add_sourcetype_fields",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"alert_whitelisting",tbd
+"lame_analytic_documentation",tbd,tbd,admin,"analytic_information",tbd
+"lame_documentation",tbd,tbd,admin,"analytics_and_knowledge_object_overview",tbd
+"lame_documentation",tbd,tbd,admin,"audit_dashboards",tbd
+"CyberSentry_Training","Teaches the fundamentals of building a Splunk Query","N/A",tmoore,"build_a_query",Training
+"lame_wekan_pm",tbd,tbd,admin,"card_id_drilldown",tbd
+"CyberSentry_Training","Documentation for explaining the makeup of a central site and a partner site","N/A",tmoore,"central_vs_partner_sites",Documentation
+"lame_training",tbd,tbd,admin,"community_id_generator",tbd
+"log_analyis_made_easy_administration",tbd,tbd,admin,"conf_page_changes",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"conn_log_anomalies",tbd
+"CyberSentry_Training","Documentation Cheat sheet for Corelight Zeek","N/A",dklingler,"corelight_zeek_cheat_sheet",Documentation
+"CyberSentry_Training","Maps MITRE caegories for saved searches and dashboards","N/A",tmoore,"dashboard_saved_searches_mitre_mapping",Oversite
+search,tbd,tbd,admin,deletedeletedelete,tbd
+"lame_training",tbd,tbd,admin,deleteme,tbd
+search,tbd,tbd,admin,deletemelater,tbd
+"CyberSentry_Training","Online Documentation for how knowledge objects such as saved searches, dashboards, and alerts are created","N/A",tmoore,"developing_splunk_apps_and_dashboards",Documentation
+"log_analysis_made_easy",tbd,tbd,admin,"dns_log_anomalies",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"dns_traffic_for_an_ip",tbd
+"CyberSentry_Training","Training page about dns traffic over non-dns port","N/A",admin,"dns_traffic_over_nondns_port",Training
+"lame_analytic_documentation",tbd,tbd,admin,"document_analytics",tbd
+"lame_analytic_documentation",tbd,tbd,admin,"document_indexes",tbd
+"CyberSentry_Training",tbd,tbd,tmoore,"document_sourcetype_analytics",tbd
+"CyberSentry_Training",tbd,tbd,tmoore,"document_sourcetype_fields",tbd
+"lame_analytic_documentation",tbd,tbd,admin,"document_sourcetypes",tbd
+"lame_analytic_documentation",tbd,tbd,admin,"document_summary_indexes",tbd
+"lame_training",tbd,tbd,admin,"enterprise_security_installation_guide",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"file_hash_for_an_ip",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"files_logs_anomalies",tbd
+"lame_wekan_pm",tbd,tbd,admin,"find_a_card",tbd
+"CyberSentry_Training",tbd,tbd,admin,"find_a_dashboard",tbd
+"CyberSentry_Training",tbd,tbd,tmoore,"help_page",tbd
+"CyberSentry_Training","Help page for doing Indicator threat Hunting","N/A",tmoore,"how_to_do_indicator_hunting",Training
+"CyberSentry_Training","Help page for How To Triage IDS Alerts In CyberSentry","N/A",tmoore,"how_to_triage_ids_alerts_in_cybersentry",Training
+"log_analysis_made_easy",tbd,tbd,admin,"http_log_anomalies",tbd
+"lame_analytic_documentation",tbd,tbd,admin,"index_information",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"ip_drilldown_overview",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"ip_inventory_editor",tbd
+"CyberSentry_Training","IPs of Sittes and Services","N/A",dklingler,"ips_of_sites_and_services","To Be Deleted"
+"lame_documentation",tbd,tbd,admin,"knowledge_objects_wo_custom_descriptions",tbd
+"lame_documentation",tbd,tbd,admin,"list_of_dashboards",tbd
+"CyberSentry_Training","Lists all dashboards on the system and what they are used for.","N/A",tmoore,"list_of_dashboarrds",Training
+"lame_documentation",tbd,tbd,admin,"list_of_indexes",tbd
+"CyberSentry_Training","Lists available indexes by user access type.","N/A",tmoore,"list_of_indexes",Engineering
+"CyberSentry_Training","Lists available available lookups.(In development)","N/A",tmoore,"list_of_lookups",Training
+"CyberSentry_Training","Lists available Macros by app","N/A",tmoore,"list_of_macros",Training
+"CyberSentry_Training","Lists available Saved Searches by app and caegory","N/A",tmoore,"list_of_saved_searches",Training
+"lame_documentation",tbd,tbd,admin,"list_of_saved_searches",tbd
+"CyberSentry_Training","Lists available Spources by index","N/A",tmoore,"list_of_sources",Training
+"lame_documentation",tbd,tbd,admin,"list_of_sourcetypes",tbd
+"CyberSentry_Training","Lists available Sourcetypes by index","N/A",tmoore,"list_of_sourcetypes",Training
+"lame_documentation",tbd,tbd,admin,"list_of_summary_indexes_",tbd
+"lame_training",tbd,tbd,admin,"log_analysis_made_easy_soc",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"log_stacking_for_an_ip",tbd
+search,tbd,tbd,admin,"metrics_dashboard",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"network_traffic_for_an_ip",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"nonwhitelisted_alerts",tbd
+"lame_lookups",tbd,tbd,admin,placeholder,tbd
+"log_analysis_made_easy",tbd,tbd,admin,"protocol_anomaly_detection",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"real_time_network_traffic_for_an_ip",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"risk_asset_overview",tbd
+"CyberSentry_Training","Looks at the SMB files being transferred and identifies the more risky file types",tbd,admin,"risky_files_transferred_over_smb",InfoGathering
+"log_analysis_made_easy",tbd,tbd,admin,"sa_traffic_for_an_ip",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"search_for_a_dashboard",tbd
+"lame_training",tbd,tbd,admin,"search_for_queries",tbd
+"lame_training",tbd,tbd,admin,"searching_splunk_rest_apis",tbd
+search,tbd,tbd,admin,"send_splunk_message",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"settokens_dashboardstudio",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"software_for_an_ip",tbd
+"lame_documentation",tbd,tbd,admin,"sourcetype_analytics",tbd
+"CyberSentry_Training",tbd,tbd,tmoore,"sourcetype_documentation",tbd
+"lame_analytic_documentation",tbd,tbd,admin,"sourcetype_information",tbd
+"CyberSentry_Training","An overview of the SSL Certificates logs across the sites",tbd,admin,"ssl_certificate_information",InfoGathering
+"log_analysis_made_easy",tbd,tbd,admin,"subnet_review",tbd
+"lame_analytic_documentation",tbd,tbd,admin,"summary_index_information",tbd
+"log_analysis_made_easy",tbd,tbd,admin,"test_collapsible",tbd
+search,tbd,tbd,admin,testurl,tbd
+"log_analysis_made_easy",tbd,tbd,admin,"threathunting_overview_prcess",tbd
+"log_analysis_made_easy",tbd,tbd,admin,timebasedqueries,tbd
+"log_analysis_made_easy",tbd,tbd,admin,tokentrial,tbd
+"log_analysis_made_easy",tbd,tbd,admin,"unknown_ips_seen_on_network",tbd
+"lame_training",tbd,tbd,admin,"useful_cli_commands",tbd
+"lame_wekan_pm",tbd,tbd,admin,"user_activity_overview",tbd
+"lame_training",tbd,tbd,admin,"visual_about_a_dashboard",tbd
+"lame_documentation",tbd,tbd,admin,"visual_about_a_dashboard",tbd
+"CyberSentry_Training","Training for Volume of Port Traffic information","N/A",admin,"volume_of_port_traffic",Training
+"lame_wekan_pm",tbd,tbd,admin,"wekan_lists_drilldown",tbd
+"lame_indexes",tbd,tbd,admin,"welcome_page",tbd
+"lame_training",tbd,tbd,admin,"welcome_to_splunk",tbd
+"log_analysis_made_easy",tbd,tbd,admin,workflowactions,tbd

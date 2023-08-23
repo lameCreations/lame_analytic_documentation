@@ -1,0 +1,21 @@
+<dashboard version="1.1">
+  <label>Dashboard Info</label>
+  <description>Information about a dashboard</description>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| inputlookup dashboard_info
+| rename _key as the_key
+| table the_key, urlField, app, details, usecase, mitre</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">cell</option>
+        <drilldown>
+          <link target="_blank">/app/lame_analytic_documentation/document_dashboards?form.the_key=$row.the_key$&amp;form.urlField=$row.urlField$&amp;form.usecase=$row.usecase$&amp;form.mitre=$row.mitre$&amp;form.description=$row.details$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>
