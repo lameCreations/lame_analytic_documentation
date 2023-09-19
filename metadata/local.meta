@@ -1,10 +1,10 @@
 [app/ui]
-version = 9.0.3
-modtime = 1692751093.814839000
+version = 9.1.0.1
+modtime = 1689347494.242034000
 
 [app/launcher]
-version = 9.0.3
-modtime = 1692751093.831405000
+version = 9.1.0.1
+modtime = 1689347494.243038000
 
 [savedsearches/update_index_info]
 access = read : [ * ], write : [ * ]
@@ -29,23 +29,23 @@ modtime = 1689350235.600486000
 
 [views/document_sourcetypes]
 owner = admin
-version = 9.0.3
-modtime = 1692491407.803928000
+version = 9.1.0.1
+modtime = 1689388087.450327000
 
 [views/sourcetype_information]
 owner = admin
-version = 9.0.3
-modtime = 1692491226.188627000
+version = 9.1.0.1
+modtime = 1689370474.219173000
 
 [views/index_information]
 owner = admin
-version = 9.0.3
-modtime = 1692490796.868237000
+version = 9.1.0.1
+modtime = 1689370416.465409000
 
 [views/summary_index_information]
 owner = admin
-version = 9.0.3
-modtime = 1692491691.744181000
+version = 9.1.0.1
+modtime = 1689370534.487152000
 
 [views/analytic_information]
 owner = admin
@@ -55,17 +55,17 @@ modtime = 1689370021.902017000
 [views/document_indexes]
 owner = admin
 version = 9.0.3
-modtime = 1692491492.518537000
+modtime = 1692458475.248498000
 
 [views/document_summary_indexes]
 owner = admin
-version = 9.0.3
-modtime = 1692491748.409500000
+version = 9.1.0.1
+modtime = 1689388144.617522000
 
 [views/document_analytics]
 owner = admin
-version = 9.0.3
-modtime = 1692492011.748172000
+version = 9.1.0.1
+modtime = 1689387848.072032000
 
 [savedsearches/update_analytics_info]
 access = read : [ * ], write : [ * ]
@@ -180,27 +180,3 @@ modtime = 1692457391.889685000
 owner = admin
 version = 9.0.3
 modtime = 1692458432.733324000
-
-[views/dashboard_info]
-owner = admin
-version = 9.0.3
-modtime = 1692502113.196344000
-
-[views/document_dashboards]
-owner = admin
-version = 9.0.3
-modtime = 1692502785.176372000
-
-[views/saved_search_info]
-owner = admin
-version = 9.0.3
-modtime = 1692504121.793161000
-
-[views/document_saved_searches]
-owner = admin
-version = 9.0.3
-modtime = 1692504152.807219000
-
-[app/package/check_for_updates]
-version = 9.0.3
-modtime = 1692751093.842076000

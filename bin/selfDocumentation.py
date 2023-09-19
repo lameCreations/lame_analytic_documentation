@@ -1,5 +1,7 @@
 import csv
 
+appFilePath = "lame_analytic_documentation"
+
 class indexInfo(object):
         def __init__(self, description, index, usegroup):
              self.description = description
@@ -107,7 +109,7 @@ def read_csv_file(file_path):
     return data
 
 def addIndexInfo():
-    indexFilePath = "/opt/splunk/etc/apps/lame_analytic_documentation/lookups/index_info.csv"
+    indexFilePath = "/opt/splunk/etc/apps/" + appFilePath + "/lookups/index_info.csv"
     indexCSV = read_csv_file(indexFilePath)
 
     i = 0
@@ -151,7 +153,7 @@ def addIndexInfo():
     append_text_to_file(file_path, writeIndex)
     
 def addDashboardInfo():
-    indexFilePath = "/opt/splunk/etc/apps/lame_analytic_documentation/lookups/dashboard_info.csv"
+    indexFilePath = "/opt/splunk/etc/apps/" + appFilePath + "/lookups/dashboard_info.csv"
     indexCSV = read_csv_file(indexFilePath)
 
     i = 0
@@ -197,7 +199,7 @@ def addDashboardInfo():
     append_text_to_file(file_path, writeIndex)
     
 def addSavedSearchInfo():
-    indexFilePath = "/opt/splunk/etc/apps/lame_analytic_documentation/lookups/savedsearch_info.csv"
+    indexFilePath = "/opt/splunk/etc/apps/" + appFilePath + "/lookups/savedsearch_info.csv"
     indexCSV = read_csv_file(indexFilePath)
 
     i = 0
@@ -247,9 +249,9 @@ def addSavedSearchInfo():
 
 
 def addSourceType():
-    sourcetypeFilePath = "/opt/splunk/etc/apps/lame_analytic_documentation/lookups/sourcetype_info.csv"
+    sourcetypeFilePath = "/opt/splunk/etc/apps/" + appFilePath + "/lookups/sourcetype_info.csv"
     sourcetypeCSV = read_csv_file(sourcetypeFilePath)
-    analtyicFilePath = "/opt/splunk/etc/apps/lame_analytic_documentation/lookups/analytics_info.csv"
+    analtyicFilePath = "/opt/splunk/etc/apps/" + appFilePath + "/lookups/analytics_info.csv"
     analtyicCSV = read_csv_file(analtyicFilePath)
 
     i = 0
@@ -332,7 +334,7 @@ def addSourceType():
    
 
 def addSourceInfo():
-    sourceFilePath = "/opt/splunk/etc/apps/lame_analytic_documentation/lookups/source_info.csv"
+    sourceFilePath = "/opt/splunk/etc/apps/" + appFilePath + "/lookups/source_info.csv"
     sourceCSV = read_csv_file(sourceFilePath)
 
     i = 0
@@ -381,9 +383,8 @@ ListOfAnalytic = []
 ListOfDashboard = []
 ListOfSavedSearch = []
 
-file_path = "/opt/splunk/etc/apps/lame_analytic_documentation/appserver/static/CS_doc.htm"
-#file_path = "/opt/splunk/etc/apps/lame_analytic_documentation/appserver/static"
-#file_path = "/home/troy/Desktop/testFile.htm"
+file_path = "/opt/splunk/etc/apps/" + appFilePath + "/appserver/static/CS_doc.htm"
+
 write_new_text_to_file(file_path)
 
 webString = '<!DOCTYPE html>'

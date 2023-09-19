@@ -5,7 +5,7 @@
     <panel>
       <table>
         <search>
-          <query>| inputlookup sourcetype_info 
+          <query>| inputlookup sourcetype_info | search description = "tbd"
 | rename _key as the_key
 | table the_key, index, sourcetype, description, usegroup</query>
           <earliest>-24h@h</earliest>

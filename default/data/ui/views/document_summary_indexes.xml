@@ -15,14 +15,6 @@
     </input>
     <input type="dropdown" token="usegroup">
       <label>Use Group</label>
-      <fieldForLabel>usegroup</fieldForLabel>
-      <fieldForValue>usegroup</fieldForValue>
-      <search>
-        <query>| inputlookup usegroup.csv</query>
-      </search>
-    </input>
-    <input type="text" token="the_key">
-      <label>Key</label>
     </input>
   </fieldset>
   <row>
